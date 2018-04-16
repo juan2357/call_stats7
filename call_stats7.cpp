@@ -7,7 +7,6 @@
 #include <string>
 #include <fstream>
 #include <iomanip>
-
 using namespace std;
 
 
@@ -223,30 +222,45 @@ void call_class::process()
 /***************************************************************************************************************************/
 ostream & operator<<(ostream & out, call_class & Org)
 {
-
-	cout.setf(ios::showpoint);
-	cout.precision(2);
-	cout.setf(ios::fixed);
+	ofstream outFile;
+	outFile.open("stats7_output.txt");
 
 
+
+	if (outFile.fail()) // if problem opening file, print message and exit program
+	{
+		cout << "Output file did not open correctly" << endl;
+		exit(1);
+	}
 
 	for(int i=0; i<Org.count; i++)
 	{
-		cout << std::left << setw(30)<< Org.call_DB[i].firstname <<"  "<< endl;
-		cout << std::left << setw(30)<< Org.call_DB[i].lastname <<"  "<< endl;
-	  cout << std::left << setw(30)<< Org.call_DB[i].relays <<"  "<< endl;
-		cout << std::left << setw(30)<< Org.call_DB[i].cell_number <<"  "<< endl;
-		cout << std::left << setw(30)<< Org.call_DB[i].call_length <<"  "<< endl;
-		cout << std::left << setw(30)<< Org.call_DB[i].net_cost << "  "<< endl;
-		cout << std::left << setw(30)<< Org.call_DB[i].tax_rate << "  "<< endl;
-		cout << std::left << setw(30)<< Org.call_DB[i].call_tax << "  "<< endl;
-		cout << std::left << setw(30)<< Org.call_DB[i].total_cost << endl << endl;
+		out << std::left << setw(30)<< Org.call_DB[i].firstname <<"  "<< endl;
+		out << std::left << setw(30)<< Org.call_DB[i].lastname <<"  "<< endl;
+	  out << std::left << setw(30)<< Org.call_DB[i].relays <<"  "<< endl;
+		out << std::left << setw(30)<< Org.call_DB[i].cell_number <<"  "<< endl;
+		out << std::left << setw(30)<< Org.call_DB[i].call_length <<"  "<< endl;
+		out << std::left << setw(30)<< Org.call_DB[i].net_cost << "  "<< endl;
+		out << std::left << setw(30)<< Org.call_DB[i].tax_rate << "  "<< endl;
+		out << std::left << setw(30)<< Org.call_DB[i].call_tax << "  "<< endl;
+		out << std::left << setw(30)<< Org.call_DB[i].total_cost << endl << endl;
+
+		outFile << std::left << setw(30)<< Org.call_DB[i].firstname <<"  "<< endl;
+		outFile << std::left << setw(30)<< Org.call_DB[i].lastname <<"  "<< endl;
+		outFile << std::left << setw(30)<< Org.call_DB[i].relays <<"  "<< endl;
+		outFile << std::left << setw(30)<< Org.call_DB[i].cell_number <<"  "<< endl;
+		outFile << std::left << setw(30)<< Org.call_DB[i].call_length <<"  "<< endl;
+		outFile << std::left << setw(30)<< Org.call_DB[i].net_cost << "  "<< endl;
+		outFile << std::left << setw(30)<< Org.call_DB[i].tax_rate << "  "<< endl;
+		outFile << std::left << setw(30)<< Org.call_DB[i].call_tax << "  "<< endl;
+		outFile << std::left << setw(30)<< Org.call_DB[i].total_cost << endl << endl;
 	}
 
        //Put code to OPEN and CLOSE an ofstream and print to the file "stats7_output.txt".
-
-    return out;
+	outFile.close();
+  return out;
 		 //must have this statement
+
 }
 
 /****************************************************************************************************************************/
@@ -264,8 +278,10 @@ call_class::~call_class()
 //driver to test the functionality of your class.
 int main()
 {
+
 	cout<<"TEST1: Testing the Default Constructor, is_full and double_size\n";
 	call_class MyClass;
+	MyClass.process();
 	cout<<"Finish TEST1: testing the default constructor\n\n\n\n";
 
 	cout<<"Test2: Testing add, double_size, process, and is_full() \n";
@@ -278,7 +294,8 @@ int main()
 
 	cout<<"Test4: Testing operator<<\n\n";
 	cout<<MyClass<<endl;
-	cout<<"Fist TEST4\n\n\n\n";
+
+	cout<<"Finish TEST4\n\n\n\n";
 
 	cout<<"The destructor will be called automatically\n";
 
